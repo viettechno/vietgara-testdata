@@ -7,11 +7,11 @@
 | **Type** | Test data (YAML + JSON Schema), public repository |
 | **Used by** | `vietgara-backend` (`testing/blackbox`), `vietgara-e2e`, `vietgara-docs` (the generated `00_Test_Data.md`) and, from Release 10.2, `vietgara-help` (its screenshot script runs on the staging seed) |
 | **Does** | Single source of truth for named test personas and records, so the documents, the API tests and the browser tests never drift apart |
-| **Built with** | YAML, JSON Schema (draft 2020-12), Python validator, Go loader; TypeScript loader remains planned |
+| **Built with** | YAML, JSON Schema (draft 2020-12), Python validator, Go and TypeScript loaders |
 | **Depends on** | Nothing at run time. A seeder (Release 4.0) creates the data through the public VietGara API |
 | **Related** | `vietgara-docs` (Release Plan Phase 4, Test Strategy, E2E Scenarios), `vietgara-backend`, `vietgara-e2e`, `vietgara-infra` |
 
-Status: **initial dataset and Go loader.** The structure, naming and baseline records are in place and validated. The TypeScript loader, seeder and test-only purge remain Release 4.0 work in the [Release Plan](https://github.com/viettechno/vietgara-docs/blob/master/docs/01-Product/Release_Plan/Release_Plan_Phase4.md).
+Status: **initial dataset and loaders.** The structure, naming and baseline records are in place and validated. The seeder and test-only purge remain Release 4.0 work in the [Release Plan](https://github.com/viettechno/vietgara-docs/blob/master/docs/01-Product/Release_Plan/Release_Plan_Phase4.md).
 
 ## Layout
 
@@ -66,6 +66,8 @@ The API cannot remove used records (the delete-or-deactivate rule keeps them), s
 pip install pyyaml jsonschema
 make validate        # merge data/, check the schema, check every reference
 go test ./go/...     # test the Go loader
+npm ci               # install TypeScript workspace dependencies
+npm test             # build and test the TypeScript loader
 ```
 
 The Go loader is available as `github.com/viettechno/vietgara-testdata/go`:
@@ -89,6 +91,25 @@ func main() {
 ```
 
 `Load` merges the `.yaml` files into typed Go structs and rejects duplicate top-level sections and unknown fields. It does not replace `make validate`, which checks the JSON Schema and references between records.
+
+The TypeScript loader is a local npm package at `typescript/` and requires Node.js 22 or newer:
+
+```json
+{
+  "dependencies": {
+    "@vietgara/testdata": "file:../vietgara-testdata/typescript"
+  }
+}
+```
+
+```ts
+import { load } from "@vietgara/testdata";
+
+const dataset = await load(".testdata/data");
+console.log(dataset.users[0]?.key);
+```
+
+It merges the `.yaml` files into typed objects and rejects duplicate top-level sections and unknown top-level fields. Like the Go loader, it does not replace `make validate`.
 
 The consuming suites pin a **tag** of this repository (`v0.1.0`, ...). Change the dataset by pull request; a change that renames or removes a persona is a breaking change and bumps the minor version while the version is below 1.0.
 

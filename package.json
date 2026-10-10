@@ -1,0 +1,11 @@
+{
+  "name": "vietgara-testdata",
+  "private": true,
+  "workspaces": [
+    "typescript"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @vietgara/testdata",
+    "test": "npm test --workspace @vietgara/testdata"
+  }
+}
