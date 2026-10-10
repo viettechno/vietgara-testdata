@@ -66,8 +66,8 @@ The API cannot remove used records (the delete-or-deactivate rule keeps them), s
 pip install pyyaml jsonschema
 make validate        # merge data/, check the schema, check every reference
 go test ./go/...     # test the Go loader
-npm --prefix typescript ci
-npm --prefix typescript test
+npm ci               # install TypeScript workspace dependencies
+npm test             # build and test the TypeScript loader
 ```
 
 The Go loader is available as `github.com/viettechno/vietgara-testdata/go`:

@@ -14,11 +14,9 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-          cache-dependency-path: typescript/package-lock.json
+          cache-dependency-path: package-lock.json
       - run: npm ci
-        working-directory: typescript
       - run: npm test
-        working-directory: typescript
 
   test-go:
     runs-on: ubuntu-latest
