@@ -4,14 +4,14 @@
 
 | | |
 | --- | --- |
-| **Type** | Test data (YAML + JSON Schema), private repository |
+| **Type** | Test data (YAML + JSON Schema), public repository |
 | **Used by** | `vietgara-backend` (`testing/blackbox`), `vietgara-e2e`, `vietgara-docs` (the generated `00_Test_Data.md`) and, from Release 10.2, `vietgara-help` (its screenshot script runs on the staging seed) |
 | **Does** | Single source of truth for named test personas and records, so the documents, the API tests and the browser tests never drift apart |
-| **Built with** | YAML, JSON Schema (draft 2020-12), a Python validator; Go and TypeScript loaders are added in Release 4.0 |
+| **Built with** | YAML, JSON Schema (draft 2020-12), Python validator, Go loader; TypeScript loader remains planned |
 | **Depends on** | Nothing at run time. A seeder (Release 4.0) creates the data through the public VietGara API |
 | **Related** | `vietgara-docs` (Release Plan Phase 4, Test Strategy, E2E Scenarios), `vietgara-backend`, `vietgara-e2e`, `vietgara-infra` |
 
-Status: **initial dataset.** The structure, naming and baseline records are in place and validated. The Go and TypeScript loaders, the seeder and the test-only purge are built in Release 4.0 (Phase 4, Quality Foundation) of the [Release Plan](https://github.com/viettechno/vietgara-docs/blob/master/docs/01-Product/Release_Plan/Release_Plan_Phase4.md).
+Status: **initial dataset and Go loader.** The structure, naming and baseline records are in place and validated. The TypeScript loader, seeder and test-only purge remain Release 4.0 work in the [Release Plan](https://github.com/viettechno/vietgara-docs/blob/master/docs/01-Product/Release_Plan/Release_Plan_Phase4.md).
 
 ## Layout
 
@@ -54,7 +54,7 @@ E-mail addresses always use the test domain (`<key>@vietgara.test`). **Never put
 
 - On the local and stubbed stacks every baseline user has the one password in `data/environments.yaml` (`stubbed`).
 - On staging the dataset holds only `passwordRef: TEST_PASSWORD`; the value is a CI secret, the same for every persona. The platform admin has its own secret (`ADMIN_PASSWORD`). When MFA ships, test admins get a fixed TOTP secret from a secret too.
-- **No real credential, token or personal data is ever committed.** The repository is private because staging is on the internet and a predictable name with a known password would be an open door.
+- **No staging credential, token or personal data is committed.** The repository is public; values under `stubbed` are disposable test credentials and must never be used on a publicly reachable deployment.
 
 ## Clean-up
 
@@ -65,7 +65,30 @@ The API cannot remove used records (the delete-or-deactivate rule keeps them), s
 ```bash
 pip install pyyaml jsonschema
 make validate        # merge data/, check the schema, check every reference
+go test ./go/...     # test the Go loader
 ```
+
+The Go loader is available as `github.com/viettechno/vietgara-testdata/go`:
+
+```go
+package main
+
+import (
+    "fmt"
+    "log"
+    "github.com/viettechno/vietgara-testdata/go"
+)
+
+func main() {
+    dataset, err := testdata.Load(".testdata/data")
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(dataset.Users[0].Key)
+}
+```
+
+`Load` merges the `.yaml` files into typed Go structs and rejects duplicate top-level sections and unknown fields. It does not replace `make validate`, which checks the JSON Schema and references between records.
 
 The consuming suites pin a **tag** of this repository (`v0.1.0`, ...). Change the dataset by pull request; a change that renames or removes a persona is a breaking change and bumps the minor version while the version is below 1.0.
 
