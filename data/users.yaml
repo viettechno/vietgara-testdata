@@ -1,0 +1,21 @@
+# Keys are the user name part of the e-mail: <key>@<emailDomain>.
+users:
+  # Platform
+  - { key: admin, name: QA Platform Admin, phone: "0900000001", platformAdmin: true }
+  - { key: support1, name: QA Support 1, phone: "0900000002", platformRole: billing-support, requires: phase-7 }
+
+  # Owners
+  - { key: owner1, name: QA Owner 1, phone: "0900000101", plan: pro }
+  - { key: owner2, name: QA Owner 2, phone: "0900000201", plan: trial }
+
+  # Staff of gara1-1 and gara1-2
+  - { key: manager1-1, name: QA Manager 1-1, phone: "0900000111" }
+  - { key: accountant1-1, name: QA Accountant 1-1, phone: "0900000112" }
+  - { key: advisor1-1, name: QA Advisor 1-1, phone: "0900000113" }
+  - { key: technician1-1, name: QA Technician 1-1, phone: "0900000114" }
+  - { key: inventory1-1, name: QA Inventory 1-1, phone: "0900000115" }
+  - { key: viewer1-1, name: QA Viewer 1-1, phone: "0900000116" }
+
+  # Special states
+  - { key: freelancer, name: QA Freelancer, phone: "0900000301", note: "Verified user that belongs to no garage; the invitee of invitation scenarios" }
+  - { key: unverified, name: QA Unverified User, verified: false, note: "Signed up, never verified the e-mail" }

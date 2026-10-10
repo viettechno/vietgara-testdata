@@ -1,0 +1,13 @@
+# Suppliers sell parts to the garage. They are not customers and not insurers.
+# Until Release 5.0 the API calls them partners of type supplier.
+suppliers:
+  - key: supplier1-1-1
+    garage: gara1-1
+    name: QA Supplier Phu Tung Sai Gon
+    taxCode: "0301234567"
+    contact: { person: Mr. Hai, phone: "0912000001", email: sales.phutung@vietgara.test }
+  - key: supplier1-1-2
+    garage: gara1-1
+    name: QA Supplier Lop Xe Viet
+    taxCode: "0307654321"
+    contact: { person: Ms. Mai, phone: "0912000004", email: sales.lopxe@vietgara.test }

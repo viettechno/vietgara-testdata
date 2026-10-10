@@ -1,0 +1,12 @@
+# Targets and how the shared test password is supplied. Never commit a real secret.
+version: 1
+emailDomain: vietgara.test
+environments:
+  stubbed:
+    # Local and CI stack: one well-known password for every baseline user.
+    password: "Test#2026-local"
+    adminPassword: "Admin#2026-local"
+  staging:
+    # Staging is on the internet: the values come from CI secrets.
+    passwordRef: TEST_PASSWORD
+    adminPasswordRef: ADMIN_PASSWORD

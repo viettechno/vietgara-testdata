@@ -1,0 +1,33 @@
+# Customers are garage-owned profiles of vehicle owners; they need no user.
+# The same phone in two garages is on purpose (tenant isolation).
+customers:
+  - key: customer1-1-1
+    garage: gara1-1
+    name: QA Customer An Nguyen
+    phone: "0911000001"
+    email: customer.an@vietgara.test
+    consent: true
+    vehicles:
+      - { plate: "51A-111.11", make: Toyota, model: Vios, year: 2020 }
+  - key: customer1-1-2
+    garage: gara1-1
+    name: QA Customer Binh Tran
+    phone: "0911000002"
+    email: customer.binh@vietgara.test
+    consent: true
+    vehicles:
+      - { plate: "51B-222.22", make: Honda, model: City, year: 2019 }
+  - key: customer1-2-1
+    garage: gara1-2
+    name: QA Customer Chi Le
+    phone: "0911000003"
+    consent: true
+    vehicles:
+      - { plate: "29A-333.33", make: Hyundai, model: Accent, year: 2021 }
+  - key: customer2-1-1
+    garage: gara2-1
+    name: QA Customer Dung Pham
+    phone: "0911000001"
+    consent: true
+    vehicles:
+      - { plate: "30A-444.44", make: Mazda, model: "3", year: 2021 }

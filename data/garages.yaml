@@ -1,0 +1,37 @@
+garages:
+  - key: gara1-1
+    owner: owner1
+    name: QA Gara 1-1 Quan 1
+    address: 12 Le Loi, Ben Nghe, Quan 1, TP.HCM
+    phone: "0283000101"
+    taxCode: "0312345601"
+  - key: gara1-2
+    owner: owner1
+    name: QA Gara 1-2 Thu Duc
+    address: 34 Vo Van Ngan, Thu Duc, TP.HCM
+    phone: "0283000102"
+    taxCode: "0312345602"
+  - key: gara2-1
+    owner: owner2
+    name: QA Gara 2-1 Ba Dinh
+    address: 56 Kim Ma, Ba Dinh, Ha Noi
+    phone: "0243000201"
+    taxCode: "0112345601"
+
+# Custom roles and groups on top of the default groups
+# (Manager, Accountant, Service Advisor, Technician, Inventory Staff).
+roles:
+  - { owner: owner1, name: QA Customer Viewer, permissions: [customer.read] }
+
+groups:
+  - { garage: gara1-1, name: QA Customer Viewers, role: QA Customer Viewer }
+
+# Which user works where, in which group.
+staff:
+  - { user: manager1-1, garage: gara1-1, group: Manager }
+  - { user: accountant1-1, garage: gara1-1, group: Accountant }
+  - { user: advisor1-1, garage: gara1-1, group: Service Advisor }
+  - { user: technician1-1, garage: gara1-1, group: Technician }
+  - { user: technician1-1, garage: gara1-2, group: Technician }
+  - { user: inventory1-1, garage: gara1-1, group: Inventory Staff }
+  - { user: viewer1-1, garage: gara1-1, group: QA Customer Viewers }

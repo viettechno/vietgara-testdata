@@ -1,0 +1,8 @@
+plans:
+  - code: qa-small
+    name: QA Small
+    price: 100000
+    currency: VND
+    billingCycle: monthly
+    limits: { maxGarages: 1, maxStaff: 2, maxTransactionsPerDay: 10 }
+    features: [customers]

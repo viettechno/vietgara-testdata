@@ -1,0 +1,39 @@
+# Units, categories and parts of gara1-1. Needs Release 6.0 for units and categories;
+# before that the seeder creates the parts with their base unit text only.
+catalogue:
+  requires: phase-6
+  garage: gara1-1
+  units:
+    - { key: litre, name: Litre, abbreviation: L }
+    - { key: piece, name: Piece, abbreviation: pc }
+    - { key: can, name: Can, abbreviation: can }
+    - { key: case, name: Case, abbreviation: case }
+  categories:
+    - { key: engine-oil, name: Engine oil, children: [{ key: synthetic, name: Synthetic }] }
+    - { key: filters, name: Filters }
+    - { key: wipers, name: Wipers }
+  items:
+    - sku: OIL-5W30
+      name: Engine oil 5W-30
+      category: synthetic
+      brand: Castrol
+      baseUnit: litre
+      packaging: [{ unit: can, factor: 4 }]
+      reorderThreshold: 10
+      defaultSupplier: supplier1-1-1
+    - sku: FLT-OIL-01
+      name: Oil filter
+      category: filters
+      brand: Bosch
+      baseUnit: piece
+      packaging: [{ unit: case, factor: 24 }]
+      reorderThreshold: 5
+      defaultSupplier: supplier1-1-1
+    - sku: WPR-24
+      name: Wiper blade 24 inch
+      category: wipers
+      brand: Bosch
+      baseUnit: piece
+      packaging: [{ unit: case, factor: 10 }]
+      reorderThreshold: 4
+      defaultSupplier: supplier1-1-2
