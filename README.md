@@ -20,7 +20,7 @@ schema/dataset.schema.json   JSON Schema of the merged dataset
 data/                        One YAML file per area; the top-level keys are merged
   environments.yaml          E-mail domain and how the password is supplied per target
   plans.yaml                 Subscription plans the tests create
-  users.yaml                 Platform users and owners, staff, freelancer, unverified user
+  users.yaml                 Platform users and owners, staff, a supplier user, freelancer, unverified user
   garages.yaml               Garages, custom roles and groups, staff memberships
   customers.yaml             Customers with their vehicles
   suppliers.yaml             Suppliers (not customers, not insurers)
@@ -40,6 +40,7 @@ Short, predictable names. The same key is the user name part of the e-mail, so a
 | Customer | `customer<owner>-<garage>-<n>` | `customer1-1-1` |
 | Supplier | `supplier<owner>-<garage>-<n>` | `supplier1-1-1` |
 | Platform users | `admin`, `support<n>` | `admin` (Platform Admin), `support1` (admin staff) |
+| Supplier user | `supplieruser<n>` | `supplieruser1` (linked to `supplier1-1-1` in the supplier portal) |
 | Single-use users | created by a scenario with a unique suffix | `signup.iam001.<unique>` |
 
 E-mail addresses always use the test domain (`<key>@vietgara.test`). **Never put a real mail domain in this repository:** staging sends real e-mail, and the test domain is routed to the test inbox (Mailpit).
@@ -77,4 +78,5 @@ Some records need a feature that arrives in a later phase. They carry `requires`
 | `phase-3` | `user` terminology (the dataset itself already uses it) | Phase 3 |
 | `phase-5` | Suppliers table, vouchers, tax profiles | Release 5.0 / 5.1 |
 | `phase-6` | Units, part categories, MFA | Release 6.0 / 6.1 |
-| `phase-7` | Platform staff and roles | Release 7.1 |
+| `phase-8` | Platform staff and roles | Release 8.1 |
+| `phase-17` | Supplier user and supplier portal | Release 17.2 |

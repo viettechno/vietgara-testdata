@@ -72,6 +72,7 @@
         "plan": { "type": "string", "description": "Plan of an owner: a built-in plan code or a plan of this dataset" },
         "platformAdmin": { "type": "boolean" },
         "platformRole": { "$ref": "#/$defs/key" },
+        "supplierFor": { "type": "string", "pattern": "^supplier[0-9]+-[0-9]+-[0-9]+$", "description": "Supplier this user is linked to (supplier portal, Phase 17)" },
         "verified": { "type": "boolean" },
         "requires": { "$ref": "#/$defs/requires" },
         "note": { "type": "string" }
