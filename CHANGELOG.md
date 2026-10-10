@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add a TypeScript loader package for merging the shared YAML dataset.
 - Add a typed Go loader for merging the shared YAML dataset.
 - Add the supplier user `supplieruser1` (supplier portal actor, `requires: phase-17`); platform staff now `requires: phase-8` after Phases 7 and 8 swapped in the Release Plan.
 

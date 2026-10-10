@@ -6,6 +6,20 @@ on:
     branches: [master]
 
 jobs:
+  test-typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: typescript/package-lock.json
+      - run: npm ci
+        working-directory: typescript
+      - run: npm test
+        working-directory: typescript
+
   test-go:
     runs-on: ubuntu-latest
     steps:
