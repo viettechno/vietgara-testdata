@@ -60,6 +60,8 @@ def main():
         elif not re.fullmatch(rf"gara{re.escape(g['owner'].removeprefix('owner'))}-[0-9]+", g["key"]):
             errors.append(f"garage {g['key']}: the key must be gara<owner number>-<n> for owner {g['owner']}")
     for u in data.get("users", []):
+        if u.get("supplierFor") and u["supplierFor"] not in suppliers:
+            errors.append(f"user {u['key']}: unknown supplier '{u['supplierFor']}'")
         plan = u.get("plan")
         if plan and plan not in plans | builtin_plans:
             errors.append(f"user {u['key']}: unknown plan '{plan}'")
