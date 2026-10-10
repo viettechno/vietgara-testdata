@@ -5,7 +5,7 @@
 | | |
 | --- | --- |
 | **Type** | Test data (YAML + JSON Schema), public repository |
-| **Used by** | `vietgara-backend` (`testing/blackbox`), `vietgara-e2e`, and `vietgara-docs` (the generated `00_Test_Data.md`) |
+| **Used by** | `vietgara-backend` (`testing/blackbox`), `vietgara-e2e`, `vietgara-docs` (the generated `00_Test_Data.md`) and, from Release 10.2, `vietgara-help` (its screenshot script runs on the staging seed) |
 | **Does** | Single source of truth for named test personas and records, so the documents, the API tests and the browser tests never drift apart |
 | **Built with** | YAML, JSON Schema (draft 2020-12), Python validator, Go loader; TypeScript loader remains planned |
 | **Depends on** | Nothing at run time. A seeder (Release 4.0) creates the data through the public VietGara API |
