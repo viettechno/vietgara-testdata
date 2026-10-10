@@ -92,7 +92,7 @@ func main() {
 
 `Load` merges the `.yaml` files into typed Go structs and rejects duplicate top-level sections and unknown fields. It does not replace `make validate`, which checks the JSON Schema and references between records.
 
-The TypeScript loader is a local npm package at `typescript/`:
+The TypeScript loader is a local npm package at `typescript/` and requires Node.js 22 or newer:
 
 ```json
 {
