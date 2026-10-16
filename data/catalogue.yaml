@@ -12,6 +12,7 @@ catalogue:
     - { key: engine-oil, name: Engine oil, children: [{ key: synthetic, name: Synthetic }] }
     - { key: filters, name: Filters }
     - { key: wipers, name: Wipers }
+    - { key: beverages, name: Beverages }
   items:
     - sku: OIL-5W30
       name: Engine oil 5W-30
@@ -20,6 +21,7 @@ catalogue:
       baseUnit: litre
       packaging: [{ unit: can, factor: 4 }]
       reorderThreshold: 10
+      salePrice: 120000
       defaultSupplier: supplier1-1-1
     - sku: FLT-OIL-01
       name: Oil filter
@@ -28,6 +30,7 @@ catalogue:
       baseUnit: piece
       packaging: [{ unit: case, factor: 24 }]
       reorderThreshold: 5
+      salePrice: 85000
       defaultSupplier: supplier1-1-1
     - sku: WPR-24
       name: Wiper blade 24 inch
@@ -36,4 +39,14 @@ catalogue:
       baseUnit: piece
       packaging: [{ unit: case, factor: 10 }]
       reorderThreshold: 4
+      salePrice: 250000
+      defaultSupplier: supplier1-1-2
+    - sku: BEER-330
+      name: Beer 330ml
+      category: beverages
+      brand: Sabeco
+      baseUnit: can
+      packaging: [{ unit: case, factor: 24, salePrice: 200000 }]
+      reorderThreshold: 100
+      salePrice: 9000
       defaultSupplier: supplier1-1-2

@@ -139,12 +139,16 @@ export interface Item {
   baseUnit: string;
   packaging?: Packaging[];
   reorderThreshold?: number;
+  /** VND per base unit (whole dong). */
+  salePrice?: number;
   defaultSupplier?: string;
 }
 
 export interface Packaging {
   unit: string;
   factor: number;
+  /** Overrides base price times factor for this packaging unit. */
+  salePrice?: number;
 }
 
 const datasetSections = new Set<keyof Dataset>([

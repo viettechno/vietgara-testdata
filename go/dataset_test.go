@@ -40,6 +40,8 @@ environments:
       packaging:
         - unit: can
           factor: 4
+          salePrice: 380000
+      salePrice: 120000
 `)
 
 	got, err := testdata.Load(dir)
@@ -57,8 +59,10 @@ environments:
 	}
 	if got.Catalogue == nil || len(got.Catalogue.Items) != 1 ||
 		len(got.Catalogue.Items[0].Packaging) != 1 ||
-		got.Catalogue.Items[0].Packaging[0].Factor != 4 {
-		t.Errorf("catalogue = %#v, want one item with packaging factor 4", got.Catalogue)
+		got.Catalogue.Items[0].Packaging[0].Factor != 4 ||
+		got.Catalogue.Items[0].SalePrice != 120000 ||
+		got.Catalogue.Items[0].Packaging[0].SalePrice == nil || *got.Catalogue.Items[0].Packaging[0].SalePrice != 380000 {
+		t.Errorf("catalogue = %#v, want one item with packaging factor 4 and sale prices", got.Catalogue)
 	}
 }
 

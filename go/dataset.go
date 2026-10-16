@@ -166,6 +166,8 @@ type Item struct {
 	BaseUnit         string      `yaml:"baseUnit"`
 	Packaging        []Packaging `yaml:"packaging"`
 	ReorderThreshold int         `yaml:"reorderThreshold"`
+	// SalePrice is VND per base unit (whole dong).
+	SalePrice int `yaml:"salePrice"`
 	DefaultSupplier  string      `yaml:"defaultSupplier"`
 }
 
@@ -173,6 +175,8 @@ type Item struct {
 type Packaging struct {
 	Unit   string  `yaml:"unit"`
 	Factor float64 `yaml:"factor"`
+	// SalePrice overrides base price times factor for one packaging unit; nil derives it.
+	SalePrice *int `yaml:"salePrice"`
 }
 
 // Load reads and merges the *.yaml files in dataDir into a typed Dataset.

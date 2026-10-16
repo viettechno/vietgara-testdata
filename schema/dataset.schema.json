@@ -171,9 +171,10 @@
               "baseUnit": { "$ref": "#/$defs/key" },
               "packaging": {
                 "type": "array",
-                "items": { "type": "object", "additionalProperties": false, "required": ["unit", "factor"], "properties": { "unit": { "$ref": "#/$defs/key" }, "factor": { "type": "number", "exclusiveMinimum": 0 } } }
+                "items": { "type": "object", "additionalProperties": false, "required": ["unit", "factor"], "properties": { "unit": { "$ref": "#/$defs/key" }, "factor": { "type": "number", "exclusiveMinimum": 0 }, "salePrice": { "type": "integer", "minimum": 0 } } }
               },
               "reorderThreshold": { "type": "integer", "minimum": 0 },
+              "salePrice": { "type": "integer", "minimum": 0 },
               "defaultSupplier": { "type": "string" }
             }
           }
