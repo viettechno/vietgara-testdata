@@ -16,7 +16,8 @@ load:
     - key: garages50
       description: About 50 garages, each with a working catalogue, stock and a customer base
       garages: 50
-      ownerPlan: pro
+      # 'chain' allows 1,000 transactions a day; the 100 of 'pro' would end a run in minutes.
+      ownerPlan: chain
       customersPerGarage: 30
       vehiclesPerCustomer: 2
       # Stock received per part when the garage is seeded, in base units. Large

@@ -44,7 +44,7 @@ def main():
     garages = [g["key"] for g in data.get("garages", [])]
     owners = {g["owner"] for g in data.get("garages", [])}
     plans = {p["code"] for p in data.get("plans", [])}
-    builtin_plans = {"trial", "basic", "pro"}
+    builtin_plans = {"trial", "basic", "pro", "starter", "professional", "chain"}
     customers = [c["key"] for c in data.get("customers", [])]
     suppliers = [s["key"] for s in data.get("suppliers", [])]
 
