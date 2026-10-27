@@ -15,6 +15,7 @@ export interface Dataset {
   customers: Customer[];
   suppliers: Supplier[];
   catalogue?: Catalogue;
+  load?: LoadTest;
 }
 
 export interface Environment {
@@ -119,6 +120,49 @@ export interface Catalogue {
   items: Item[];
 }
 
+/** The load-test population: profiles with counts, and the pools the seeder draws from. */
+export interface LoadTest {
+  requires?: string;
+  profiles: LoadProfile[];
+  familyNames: string[];
+  givenNames: string[];
+  vehicles: LoadVehicle[];
+  parts: LoadPart[];
+  jobs: LoadJob[];
+}
+
+export interface LoadProfile {
+  key: string;
+  description?: string;
+  garages: number;
+  ownerPlan: string;
+  customersPerGarage: number;
+  vehiclesPerCustomer: number;
+  /** Received per part, in base units. */
+  openingStock: number;
+  /** VND per base unit. */
+  unitCost: number;
+}
+
+export interface LoadVehicle {
+  make: string;
+  model: string;
+  year: number;
+}
+
+/** A part every load-test garage stocks; salePrice is VND per base unit. */
+export interface LoadPart {
+  sku: string;
+  name: string;
+  salePrice: number;
+}
+
+/** A job every load-test garage offers; price is VND. */
+export interface LoadJob {
+  name: string;
+  price: number;
+}
+
 export interface Unit {
   key: string;
   name: string;
@@ -164,6 +208,7 @@ const datasetSections = new Set<keyof Dataset>([
   "customers",
   "suppliers",
   "catalogue",
+  "load",
 ]);
 
 /**

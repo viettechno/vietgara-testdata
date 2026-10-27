@@ -163,3 +163,61 @@ func writeDataFile(t *testing.T, dir, name, content string) {
 		t.Fatalf("write %s: %v", name, err)
 	}
 }
+
+func TestLoadReadsLoadProfile(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	writeDataFile(t, dir, "environments.yaml", `version: 1
+emailDomain: vietgara.test
+environments: {}
+`)
+	writeDataFile(t, dir, "load.yaml", `load:
+  requires: phase-7
+  profiles:
+    - { key: garages50, garages: 50, ownerPlan: pro, customersPerGarage: 30, vehiclesPerCustomer: 2, openingStock: 5000, unitCost: 60000 }
+  familyNames: [Nguyen]
+  givenNames: [An]
+  vehicles:
+    - { make: Toyota, model: Vios, year: 2020 }
+  parts:
+    - { sku: LD-OIL, name: Engine oil, salePrice: 120000 }
+  jobs:
+    - { name: Oil change, price: 150000 }
+`)
+
+	got, err := testdata.Load(dir)
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+	if got.Load == nil || len(got.Load.Profiles) != 1 {
+		t.Fatalf("Load = %#v, want one profile", got.Load)
+	}
+	profile := got.Load.Profiles[0]
+	if profile.Garages != 50 || profile.OwnerPlan != "pro" || profile.OpeningStock != 5000 || profile.UnitCost != 60000 {
+		t.Errorf("profile = %#v", profile)
+	}
+	if len(got.Load.Parts) != 1 || got.Load.Parts[0].SalePrice != 120000 || len(got.Load.Jobs) != 1 || got.Load.Jobs[0].Price != 150000 {
+		t.Errorf("pools = %#v", got.Load)
+	}
+}
+
+// The shipped dataset must load into the typed structs, so a mistyped key in
+// data/*.yaml fails here and not silently as a zero value in a consumer.
+func TestLoadShippedDataset(t *testing.T) {
+	t.Parallel()
+
+	got, err := testdata.Load("../data")
+	if err != nil {
+		t.Fatalf("Load(../data) error = %v", err)
+	}
+	if got.Load == nil || len(got.Load.Profiles) == 0 {
+		t.Fatalf("shipped dataset has no load profile: %#v", got.Load)
+	}
+	for _, profile := range got.Load.Profiles {
+		if profile.Garages == 0 || profile.CustomersPerGarage == 0 || profile.VehiclesPerCustomer == 0 ||
+			profile.OpeningStock == 0 || profile.OwnerPlan == "" {
+			t.Errorf("profile %q has a zero field: %#v", profile.Key, profile)
+		}
+	}
+}

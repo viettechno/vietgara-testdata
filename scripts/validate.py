@@ -44,7 +44,7 @@ def main():
     garages = [g["key"] for g in data.get("garages", [])]
     owners = {g["owner"] for g in data.get("garages", [])}
     plans = {p["code"] for p in data.get("plans", [])}
-    builtin_plans = {"trial", "basic", "pro"}
+    builtin_plans = {"trial", "basic", "pro", "starter", "professional", "chain"}
     customers = [c["key"] for c in data.get("customers", [])]
     suppliers = [s["key"] for s in data.get("suppliers", [])]
 
@@ -128,6 +128,19 @@ def main():
                 errors.append(f"item {i['sku']}: unknown supplier '{sup}'")
             elif sup and next(s for s in data["suppliers"] if s["key"] == sup)["garage"] != cat["garage"]:
                 errors.append(f"item {i['sku']}: supplier '{sup}' belongs to another garage")
+
+    lt = data.get("load")
+    if lt and not errors:  # the cross-checks need a schema-valid section
+        dup("load profile", [p["key"] for p in lt["profiles"]])
+        dup("load part sku", [p["sku"] for p in lt["parts"]])
+        dup("load job", [j["name"] for j in lt["jobs"]])
+        for p in lt["profiles"]:
+            if p["ownerPlan"] not in plans | builtin_plans:
+                errors.append(f"load profile {p['key']}: unknown plan '{p['ownerPlan']}'")
+            # Plates are generated from the garage number and the customer and
+            # vehicle index, five digits: more would repeat a plate.
+            if p["customersPerGarage"] * p["vehiclesPerCustomer"] > 99999:
+                errors.append(f"load profile {p['key']}: more vehicles per garage than plates")
 
     if errors:
         print("\n".join(errors))

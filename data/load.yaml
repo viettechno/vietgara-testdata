@@ -1,0 +1,55 @@
+# The population of the Release 9.0 load test (NFR-PF-06). The seeder
+# (vietgara-backend, testing/blackbox/cmd/loadseed) creates it through the
+# public API; the names are generated, so the profile only holds counts and the
+# pools that make the records realistic. The same dataset version always yields
+# the same population. It is separate from the named personas
+# above: nothing here is typed by hand, and a purge removes it with the rest of
+# the test domain.
+#
+# Generated names (the number runs from 1 to `garages`):
+#   owner      loadowner<n>@<emailDomain>, one garage each
+#   garage     QA Load Gara <n>
+#   customer   <family name> <given name> from the pools, phone 09<8 digits>
+#   vehicle    plate 5<n mod 10>A-<5 digits> (unique within a garage), make and model from the pool
+load:
+  requires: phase-7
+  profiles:
+    - key: garages50
+      description: About 50 garages, each with a working catalogue, stock and a customer base
+      garages: 50
+      # 'chain' allows 1,000 transactions a day; the 100 of 'pro' would end a run in minutes.
+      ownerPlan: chain
+      customersPerGarage: 30
+      vehiclesPerCustomer: 2
+      # Stock received per part when the garage is seeded, in base units. Large
+      # enough that the run never meets a shortage.
+      openingStock: 5000
+      unitCost: 60000
+  familyNames: [Nguyen, Tran, Le, Pham, Hoang, Huynh, Phan, Vu, Vo, Dang, Bui, Do, Ho, Ngo, Duong, Ly]
+  givenNames: [An, Binh, Chi, Dung, Giang, Hanh, Hung, Khanh, Lan, Minh, Nam, Phuc, Quang, Thao, Trang, Tuan]
+  vehicles:
+    - { make: Toyota, model: Vios, year: 2020 }
+    - { make: Toyota, model: Innova, year: 2019 }
+    - { make: Honda, model: City, year: 2021 }
+    - { make: Hyundai, model: Accent, year: 2018 }
+    - { make: Mazda, model: "3", year: 2022 }
+    - { make: Kia, model: Morning, year: 2017 }
+    - { make: Ford, model: Ranger, year: 2020 }
+    - { make: VinFast, model: VF8, year: 2023 }
+  parts:
+    - { sku: LD-OIL-5W30, name: Engine oil 5W-30, salePrice: 120000 }
+    - { sku: LD-OIL-FLT, name: Oil filter, salePrice: 85000 }
+    - { sku: LD-AIR-FLT, name: Air filter, salePrice: 150000 }
+    - { sku: LD-BRK-PAD, name: Front brake pads, salePrice: 650000 }
+    - { sku: LD-SPK-PLG, name: Spark plug, salePrice: 90000 }
+    - { sku: LD-WPR-24, name: Wiper blade 24 inch, salePrice: 250000 }
+    - { sku: LD-BAT-45, name: Battery 45Ah, salePrice: 1500000 }
+    - { sku: LD-COOL-1L, name: Coolant 1 L, salePrice: 110000 }
+    - { sku: LD-BLB-H4, name: Headlight bulb H4, salePrice: 120000 }
+    - { sku: LD-CBN-FLT, name: Cabin filter, salePrice: 130000 }
+  jobs:
+    - { name: Oil change, price: 150000 }
+    - { name: Brake inspection, price: 100000 }
+    - { name: Tyre rotation, price: 120000 }
+    - { name: Wheel alignment, price: 300000 }
+    - { name: Air-conditioning service, price: 450000 }
