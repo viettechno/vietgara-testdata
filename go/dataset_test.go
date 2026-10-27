@@ -201,3 +201,23 @@ environments: {}
 		t.Errorf("pools = %#v", got.Load)
 	}
 }
+
+// The shipped dataset must load into the typed structs, so a mistyped key in
+// data/*.yaml fails here and not silently as a zero value in a consumer.
+func TestLoadShippedDataset(t *testing.T) {
+	t.Parallel()
+
+	got, err := testdata.Load("../data")
+	if err != nil {
+		t.Fatalf("Load(../data) error = %v", err)
+	}
+	if got.Load == nil || len(got.Load.Profiles) == 0 {
+		t.Fatalf("shipped dataset has no load profile: %#v", got.Load)
+	}
+	for _, profile := range got.Load.Profiles {
+		if profile.Garages == 0 || profile.CustomersPerGarage == 0 || profile.VehiclesPerCustomer == 0 ||
+			profile.OpeningStock == 0 || profile.OwnerPlan == "" {
+			t.Errorf("profile %q has a zero field: %#v", profile.Key, profile)
+		}
+	}
+}

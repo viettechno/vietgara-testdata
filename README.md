@@ -48,7 +48,7 @@ E-mail addresses always use the test domain (`<key>@vietgara.test`). **Never put
 
 ## The load-test population
 
-`data/load.yaml` sizes the population of the Release 9.0 load test (NFR-PF-06). It holds counts (`garages50`: 50 garages, 30 customers with 2 vehicles each, opening stock) and pools of family names, given names, vehicles, parts and jobs. Nothing in it is a named persona: the seeder in `vietgara-backend` (`testing/blackbox/cmd/loadseed`) generates `loadowner<n>@<emailDomain>`, `QA Load Gara <n>`, customers and plates from it, so the same tag always yields the same population. The users it creates live under the test domain and go with the normal purge.
+`data/load.yaml` sizes the population of the Release 9.0 load test (NFR-PF-06). It holds counts (`garages50`: 50 garages, 30 customers with 2 vehicles each, opening stock) and pools of family names, given names, vehicles, parts and jobs. Nothing in it is a named persona: the seeder in `vietgara-backend` (`testing/blackbox/cmd/loadseed`) generates `loadowner<n>@<emailDomain>`, `QA Load Gara <n>`, customers and plates from it, so the same dataset version always yields the same population. The users it creates live under the test domain and go with the normal purge.
 
 ## Two kinds of data
 

@@ -130,7 +130,7 @@ def main():
                 errors.append(f"item {i['sku']}: supplier '{sup}' belongs to another garage")
 
     lt = data.get("load")
-    if lt:
+    if lt and not errors:  # the cross-checks need a schema-valid section
         dup("load profile", [p["key"] for p in lt["profiles"]])
         dup("load part sku", [p["sku"] for p in lt["parts"]])
         dup("load job", [j["name"] for j in lt["jobs"]])
