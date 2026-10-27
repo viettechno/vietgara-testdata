@@ -8,10 +8,10 @@
 | **Used by** | `vietgara-backend` (`testing/blackbox`), `vietgara-e2e`, `vietgara-docs` (the generated `00_Test_Data.md`) and, from Release 10.2, `vietgara-help` (its screenshot script runs on the staging seed) |
 | **Does** | Single source of truth for named test personas and records, so the documents, the API tests and the browser tests never drift apart |
 | **Built with** | YAML, JSON Schema (draft 2020-12), Python validator, Go and TypeScript loaders |
-| **Depends on** | Nothing at run time. A seeder (Release 4.0) creates the data through the public VietGara API |
+| **Depends on** | Nothing at run time. A seeder creates the data through the public VietGara API |
 | **Related** | `vietgara-docs` (Release Plan Phase 4, Test Strategy, E2E Scenarios), `vietgara-backend`, `vietgara-e2e`, `vietgara-infra` |
 
-Status: **initial dataset and loaders.** The structure, naming and baseline records are in place and validated. The seeder and test-only purge remain Release 4.0 work in the [Release Plan](https://github.com/viettechno/vietgara-docs/blob/master/docs/01-Product/Release_Plan/Release_Plan_Phase4.md).
+Status: **dataset and loaders.** The structure, naming and baseline records are in place and validated.
 
 ## Layout
 
@@ -25,7 +25,7 @@ data/                        One YAML file per area; the top-level keys are merg
   customers.yaml             Customers with their vehicles
   suppliers.yaml             Suppliers (not customers, not insurers)
   catalogue.yaml             Units, part categories and parts
-  load.yaml                  Release 9.0 load-test population: profile counts and name, vehicle, part and job pools
+  load.yaml                  Load-test population: profile counts and name, vehicle, part and job pools
 scripts/validate.py          Merges data/, checks the schema and the references
 ```
 
@@ -48,7 +48,7 @@ E-mail addresses always use the test domain (`<key>@vietgara.test`). **Never put
 
 ## The load-test population
 
-`data/load.yaml` sizes the population of the Release 9.0 load test (NFR-PF-06). It holds counts (`garages50`: 50 garages, 30 customers with 2 vehicles each, opening stock) and pools of family names, given names, vehicles, parts and jobs. Nothing in it is a named persona: the seeder in `vietgara-backend` (`testing/blackbox/cmd/loadseed`) generates `loadowner<n>@<emailDomain>`, `QA Load Gara <n>`, customers and plates from it, so the same dataset version always yields the same population. The users it creates live under the test domain and go with the normal purge.
+`data/load.yaml` sizes the population of the load test (NFR-PF-06). It holds counts (`garages50`: 50 garages, 30 customers with 2 vehicles each, opening stock) and pools of family names, given names, vehicles, parts and jobs. Nothing in it is a named persona: the seeder in `vietgara-backend` (`testing/blackbox/cmd/loadseed`) generates `loadowner<n>@<emailDomain>`, `QA Load Gara <n>`, customers and plates from it, so the same dataset version always yields the same population. The users it creates live under the test domain and go with the normal purge.
 
 ## Two kinds of data
 
