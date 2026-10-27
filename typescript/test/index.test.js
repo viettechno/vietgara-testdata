@@ -133,3 +133,31 @@ test("load reports directory read errors", async (t) => {
     error instanceof Error && error.message.includes(`read dataset directory "${missingDir}"`),
   );
 });
+
+test("load reads the load-test profile and its pools", async (t) => {
+  const dataDir = await withDataDir(t, {
+    "environments.yaml": `version: 1
+emailDomain: vietgara.test
+environments: {}
+`,
+    "load.yaml": `load:
+  requires: phase-7
+  profiles:
+    - { key: garages50, garages: 50, ownerPlan: pro, customersPerGarage: 30, vehiclesPerCustomer: 2, openingStock: 5000, unitCost: 60000 }
+  familyNames: [Nguyen]
+  givenNames: [An]
+  vehicles:
+    - { make: Toyota, model: Vios, year: 2020 }
+  parts:
+    - { sku: LD-OIL, name: Engine oil, salePrice: 120000 }
+  jobs:
+    - { name: Oil change, price: 150000 }
+`,
+  });
+
+  const dataset = await load(dataDir);
+
+  assert.equal(dataset.load?.profiles[0]?.garages, 50);
+  assert.equal(dataset.load?.parts[0]?.salePrice, 120000);
+  assert.equal(dataset.load?.jobs[0]?.price, 150000);
+});

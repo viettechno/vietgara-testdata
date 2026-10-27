@@ -26,6 +26,7 @@ type Dataset struct {
 	Customers    []Customer             `yaml:"customers"`
 	Suppliers    []Supplier             `yaml:"suppliers"`
 	Catalogue    *Catalogue             `yaml:"catalogue"`
+	Load         *LoadTest              `yaml:"load"`
 }
 
 // Environment contains either local credentials or staging secret references.
@@ -143,6 +144,51 @@ type Catalogue struct {
 	Items      []Item     `yaml:"items"`
 }
 
+// LoadTest is the population of the load test: profiles with counts, and the pools
+// the seeder draws names, vehicles, parts and jobs from.
+type LoadTest struct {
+	Requires    string        `yaml:"requires"`
+	Profiles    []LoadProfile `yaml:"profiles"`
+	FamilyNames []string      `yaml:"familyNames"`
+	GivenNames  []string      `yaml:"givenNames"`
+	Vehicles    []LoadVehicle `yaml:"vehicles"`
+	Parts       []LoadPart    `yaml:"parts"`
+	Jobs        []LoadJob     `yaml:"jobs"`
+}
+
+// LoadProfile sizes one load-test population.
+type LoadProfile struct {
+	Key                 string `yaml:"key"`
+	Description         string `yaml:"description"`
+	Garages             int    `yaml:"garages"`
+	OwnerPlan           string `yaml:"ownerPlan"`
+	CustomersPerGarage  int    `yaml:"customersPerGarage"`
+	VehiclesPerCustomer int    `yaml:"vehiclesPerCustomer"`
+	// OpeningStock is received per part, in base units; UnitCost is VND per base unit.
+	OpeningStock int `yaml:"openingStock"`
+	UnitCost     int `yaml:"unitCost"`
+}
+
+// LoadVehicle is a make and model the seeder gives to generated vehicles.
+type LoadVehicle struct {
+	Make  string `yaml:"make"`
+	Model string `yaml:"model"`
+	Year  int    `yaml:"year"`
+}
+
+// LoadPart is a part every load-test garage stocks; SalePrice is VND per base unit.
+type LoadPart struct {
+	SKU       string `yaml:"sku"`
+	Name      string `yaml:"name"`
+	SalePrice int    `yaml:"salePrice"`
+}
+
+// LoadJob is a job every load-test garage offers; Price is VND.
+type LoadJob struct {
+	Name  string `yaml:"name"`
+	Price int    `yaml:"price"`
+}
+
 // Unit describes an inventory unit of measure.
 type Unit struct {
 	Key          string `yaml:"key"`
@@ -167,8 +213,8 @@ type Item struct {
 	Packaging        []Packaging `yaml:"packaging"`
 	ReorderThreshold int         `yaml:"reorderThreshold"`
 	// SalePrice is VND per base unit (whole dong).
-	SalePrice int `yaml:"salePrice"`
-	DefaultSupplier  string      `yaml:"defaultSupplier"`
+	SalePrice       int    `yaml:"salePrice"`
+	DefaultSupplier string `yaml:"defaultSupplier"`
 }
 
 // Packaging describes an inventory unit and its conversion factor.

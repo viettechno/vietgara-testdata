@@ -129,6 +129,19 @@ def main():
             elif sup and next(s for s in data["suppliers"] if s["key"] == sup)["garage"] != cat["garage"]:
                 errors.append(f"item {i['sku']}: supplier '{sup}' belongs to another garage")
 
+    lt = data.get("load")
+    if lt:
+        dup("load profile", [p["key"] for p in lt["profiles"]])
+        dup("load part sku", [p["sku"] for p in lt["parts"]])
+        dup("load job", [j["name"] for j in lt["jobs"]])
+        for p in lt["profiles"]:
+            if p["ownerPlan"] not in plans | builtin_plans:
+                errors.append(f"load profile {p['key']}: unknown plan '{p['ownerPlan']}'")
+            # Plates are generated from the garage number and the customer and
+            # vehicle index, five digits: more would repeat a plate.
+            if p["customersPerGarage"] * p["vehiclesPerCustomer"] > 99999:
+                errors.append(f"load profile {p['key']}: more vehicles per garage than plates")
+
     if errors:
         print("\n".join(errors))
         print(f"\n{len(errors)} problem(s)")

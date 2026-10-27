@@ -34,7 +34,8 @@
     "staff": { "type": "array", "items": { "$ref": "#/$defs/staff" } },
     "customers": { "type": "array", "items": { "$ref": "#/$defs/customer" } },
     "suppliers": { "type": "array", "items": { "$ref": "#/$defs/supplier" } },
-    "catalogue": { "$ref": "#/$defs/catalogue" }
+    "catalogue": { "$ref": "#/$defs/catalogue" },
+    "load": { "$ref": "#/$defs/load" }
   },
   "$defs": {
     "envName": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
@@ -177,6 +178,65 @@
               "salePrice": { "type": "integer", "minimum": 0 },
               "defaultSupplier": { "type": "string" }
             }
+          }
+        }
+      }
+    },
+    "load": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profiles", "familyNames", "givenNames", "vehicles", "parts", "jobs"],
+      "properties": {
+        "requires": { "$ref": "#/$defs/requires" },
+        "profiles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["key", "garages", "ownerPlan", "customersPerGarage", "vehiclesPerCustomer", "openingStock", "unitCost"],
+            "properties": {
+              "key": { "$ref": "#/$defs/key" },
+              "description": { "type": "string" },
+              "garages": { "type": "integer", "minimum": 1 },
+              "ownerPlan": { "type": "string" },
+              "customersPerGarage": { "type": "integer", "minimum": 1 },
+              "vehiclesPerCustomer": { "type": "integer", "minimum": 1 },
+              "openingStock": { "type": "integer", "minimum": 1 },
+              "unitCost": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "familyNames": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "givenNames": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "vehicles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["make", "model", "year"],
+            "properties": { "make": { "type": "string" }, "model": { "type": "string" }, "year": { "type": "integer" } }
+          }
+        },
+        "parts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sku", "name", "salePrice"],
+            "properties": { "sku": { "type": "string" }, "name": { "type": "string" }, "salePrice": { "type": "integer", "minimum": 0 } }
+          }
+        },
+        "jobs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "price"],
+            "properties": { "name": { "type": "string" }, "price": { "type": "integer", "minimum": 0 } }
           }
         }
       }

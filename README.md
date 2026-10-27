@@ -25,6 +25,7 @@ data/                        One YAML file per area; the top-level keys are merg
   customers.yaml             Customers with their vehicles
   suppliers.yaml             Suppliers (not customers, not insurers)
   catalogue.yaml             Units, part categories and parts
+  load.yaml                  Release 9.0 load-test population: profile counts and name, vehicle, part and job pools
 scripts/validate.py          Merges data/, checks the schema and the references
 ```
 
@@ -44,6 +45,10 @@ Short, predictable names. The same key is the user name part of the e-mail, so a
 | Single-use users | created by a scenario with a unique suffix | `signup.iam001.<unique>` |
 
 E-mail addresses always use the test domain (`<key>@vietgara.test`). **Never put a real mail domain in this repository:** staging sends real e-mail, and the test domain is routed to the test inbox (Mailpit).
+
+## The load-test population
+
+`data/load.yaml` sizes the population of the Release 9.0 load test (NFR-PF-06). It holds counts (`garages50`: 50 garages, 30 customers with 2 vehicles each, opening stock) and pools of family names, given names, vehicles, parts and jobs. Nothing in it is a named persona: the seeder in `vietgara-backend` (`testing/blackbox/cmd/loadseed`) generates `loadowner<n>@<emailDomain>`, `QA Load Gara <n>`, customers and plates from it, so the same tag always yields the same population. The users it creates live under the test domain and go with the normal purge.
 
 ## Two kinds of data
 
