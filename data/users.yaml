@@ -16,8 +16,8 @@ users:
   - { key: inventory1-1, name: QA Inventory 1-1, phone: "0900000115" }
   - { key: viewer1-1, name: QA Viewer 1-1, phone: "0900000116" }
 
-  # Supplier user: linked to supplier1-1-1 by the supplier portal (Release 17.2)
-  - { key: supplieruser1, name: QA Supplier User 1, phone: "0900000401", supplierFor: supplier1-1-1, requires: phase-17 }
+  # Supplier user: linked to supplier1-1-1 by the supplier portal (Release 18.2)
+  - { key: supplieruser1, name: QA Supplier User 1, phone: "0900000401", supplierFor: supplier1-1-1, requires: phase-18 }
 
   # Special states
   - { key: freelancer, name: QA Freelancer, phone: "0900000301", note: "Verified user that belongs to no garage; the invitee of invitation scenarios" }

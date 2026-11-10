@@ -128,4 +128,4 @@ Some records need a feature that arrives in a later phase. They carry `requires`
 | `phase-5` | Suppliers table, vouchers, tax profiles | Release 5.0 / 5.1 |
 | `phase-6` | Units, part categories, MFA | Release 6.0 / 6.1 |
 | `phase-8` | Platform staff and roles | Release 8.1 |
-| `phase-17` | Supplier user and supplier portal | Release 17.2 |
+| `phase-18` | Supplier user and supplier portal | Release 18.2 |
