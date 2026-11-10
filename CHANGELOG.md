@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Rename the feature gate of the supplier user `supplieruser1` from `phase-17` to `phase-18` after the phases were renumbered (Release Plan, November 10, 2026). No consumer reads the value, only that `requires` is set.
+
 ## 0.3.0 — Release 6.0
 
 - Selling prices (`salePrice`, per base unit; `packaging[].salePrice` overrides base price × factor) in the schema, the Go and TypeScript loaders and the catalogue data.
